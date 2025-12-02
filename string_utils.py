@@ -1,24 +1,52 @@
 
 
 
-def split_before_uppercases(formula):
-    pass  # replace the pass with your code
+def split_before_each_uppercases(formula):
+    if not formula:
+        return []
+    res = []
+    start = 0
+    for i in range(1, len(formula)):
+        if formula[i].isupper():
+            res.append(formula[start:i])
+            start = i
+    res.append(formula[start:])
+    return res
 
-def split_at_digit(formula):
-    pass  # replace the pass with your code
+
+
+
+
+
+def split_at_first_digit(formula):
+    for i, c in enumerate(formula):
+        if c.isdigit():
+            return formula[:i], int(formula[i:])
+    return formula, 1
+
+
+
+
+
 
 def count_atoms_in_molecule(molecular_formula):
-    """Takes a molecular formula (string) and returns a dictionary of atom counts.  
-    Example: 'H2O' → {'H': 2, 'O': 1}"""
+    """Takes a molecular formula (string) and returns a dictionary of atom counts."""
 
-    # Step 1: Initialize an empty dictionary to store atom counts
+    parts = split_before_each_uppercases(molecular_formula)
+    atom_counts = {}
 
-    for atom in split_by_capitals(molecular_formula):
-        atom_name, atom_count = split_at_number(atom)
-        
-        # Step 2: Update the dictionary with the atom name and count
+    for part in parts:
+        element, count = split_at_first_digit(part)
 
-    # Step 3: Return the completed dictionary
+        if element not in atom_counts:
+            atom_counts[element] = 0
+
+        atom_counts[element] += count
+
+    return atom_counts
+
+
+
 
 
 
